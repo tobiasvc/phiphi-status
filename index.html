@@ -155,6 +155,43 @@ details .phone{border-top:1px solid var(--line)}
     <p class="note">Saved on this phone only. Works offline.</p>
   </section>
 
+  <section id="t1d">
+    <h2>Type 1 diabetes</h2>
+    <div class="panel">
+      <details open><summary>Emergency card (show to staff)</summary>
+        <div class="item"><p lang="th" style="color:var(--ink);font-size:1.15rem;line-height:1.6">ฉันเป็นเบาหวานชนิดที่ 1 และใช้อินซูลิน<br>ถ้าฉันสับสนหรือหมดสติ ให้น้ำตาลหรือน้ำหวาน แล้วโทร 1669</p>
+        <p>I have type 1 diabetes and use insulin. If I am confused or unconscious, give me sugar or a sweet drink and call 1669.</p></div>
+        <div class="item"><p lang="th" style="color:var(--ink);font-size:1.15rem">ฉันต้องการน้ำตาล ด่วน!</p><p>I need sugar, urgently!</p></div>
+        <div class="item"><p lang="th" style="color:var(--ink);font-size:1.15rem">กรุณาเก็บอินซูลินในตู้เย็น (ห้ามแช่แข็ง)</p><p>Please keep my insulin in the fridge (do not freeze). Show this at the hotel reception.</p></div>
+      </details>
+      <details><summary>Hypo – fast sugar in Thailand</summary>
+        <div class="item"><p>7-Eleven is everywhere, also on Phi Phi (Tonsai), open 24 h: Coca-Cola (not "Zero"), orange juice, Thai iced tea, glucose sweets.</p></div>
+        <div class="item"><p>Heat, swimming and walking make insulin work faster – expect more lows. Check more often and carry sugar on boat trips and at the beach.</p></div>
+        <div class="item"><p>Thai food is often very sweet (sauces, drinks, iced coffee). Ask "mai wan" (ไม่หวาน) = not sweet.</p></div>
+      </details>
+      <details><summary>Insulin in the heat</summary>
+        <div class="item"><p>Insulin in use: keep below 30 °C, out of the sun. Never leave it in a bag on the beach or on a boat deck.</p></div>
+        <div class="item"><p>Spare insulin: in the hotel room fridge (not the freezer compartment). Use a cooling wallet (e.g. FRIO) during the day.</p></div>
+        <div class="item"><p>Insulin that is cloudy (when it should be clear) or has been hot: replace it.</p></div>
+        <div class="item"><p>CGM/pump: sweat and seawater loosen sensors. Bring extra patches and spare sensors – Libre/Dexcom are hard to buy in Thailand.</p></div>
+      </details>
+      <details><summary>Flight & time difference (+6 h)</summary>
+        <div class="item"><p>All insulin, pens, needles, sensors and sugar in hand luggage – never in checked baggage (freezes and can get lost).</p></div>
+        <div class="item"><p>Bring a doctor's letter / medical certificate in English and show it at security.</p></div>
+        <div class="item"><p>Thailand is 6 h ahead in November. Agree with the diabetes clinic in advance how to shift the long-acting dose on the travel day.</p></div>
+        <div class="item"><p>Pack double supplies, split between two bags.</p></div>
+      </details>
+      <details><summary>Hospitals that can treat diabetes</summary>
+        <div class="phone"><span><b>Phi Phi Hospital</b><small>+66 75 660 719 · Small, stabilises and transfers by boat</small></span><a class="btn" href="tel:+6675660719">Call</a></div>
+        <div class="phone"><span><b>Krabi Nakharin International</b><small>+66 75 626 555 · Krabi town, private, English-speaking</small></span><a class="btn" href="tel:+6675626555">Call</a></div>
+        <div class="phone"><span><b>Bangkok Hospital Phuket</b><small>+66 76 254 421 · Private, international (check number)</small></span><a class="btn" href="tel:+6676254421">Call</a></div>
+        <div class="phone"><span><b>Ambulance</b><small>1669 · 24 h</small></span><a class="btn" href="tel:1669">Call</a></div>
+        <div class="item"><p>Insulin (NovoRapid, Lantus etc.) is sold at hospital pharmacies, often without prescription. Bring the pen/box to show the exact type.</p></div>
+      </details>
+    </div>
+    <p class="note">General advice – her own diabetes clinic's plan always comes first.</p>
+  </section>
+
   <section>
     <h2>Emergency (tap to call)</h2>
     <div class="panel" id="phones"></div>
@@ -292,14 +329,14 @@ function advice(level,kind,d0,d1){
     a.push("Expect heavy rain or rough sea today. Avoid boat trips and swimming.");
     if(kind==="island")a.push("Tonsai and Loh Dalum flood first. Keep valuables and passport above floor level.");
     if(sea)a.push("Ask your hotel or ferry office if boats are running before you go to the pier.");
-    a.push("Keep your phone charged and some cash on you.");
+    a.push("Keep insulin cool and dry, and carry extra sugar.");
   }else if(level==="amber"){
     a.push("Showers or wind likely. Plan boat trips for the calmer days below.");
     if(sea)a.push("Check with the ferry office before travelling by boat.");
-    a.push("Carry a rain jacket.");
+    a.push("Carry a rain jacket and extra hypo sugar.");
   }else{
     a.push("No weather problems expected today.");
-    a.push("Use sun protection; UV is high even when cloudy.");
+    a.push("Heat lowers blood sugar faster – check more often, keep insulin out of the sun.");
   }
   if(d1&&d1.level==="red"&&level!=="red")a.push("Tomorrow looks worse. Do any boat travel today if you can.");
   return a.slice(0,4);
