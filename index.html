@@ -105,6 +105,18 @@ details .phone{border-top:1px solid var(--line)}
       <button type="button" data-p="kbv">Krabi</button>
       <button type="button" data-p="pp">Phi Phi</button>
     </div>
+    <label for="locSel" class="note" style="margin-top:8px">More places, or if GPS is off:
+      <select id="locSel">
+          <option value="gps">GPS (automatic)</option>
+          <option value="7.7407,98.7696,Phi Phi – Tonsai,island">Phi Phi – Tonsai</option>
+          <option value="7.7660,98.7660,Phi Phi – north,island">Phi Phi – north (Laem Tong area)</option>
+          <option value="8.0330,98.8210,Ao Nang,coast">Krabi – Ao Nang</option>
+          <option value="8.0863,98.9063,Krabi town,coast">Krabi town</option>
+          <option value="7.8804,98.3923,Phuket,coast">Phuket</option>
+          <option value="13.7563,100.5018,Bangkok,city">Bangkok</option>
+          <option value="55.6180,12.6560,Copenhagen,home">Copenhagen</option>
+        </select>
+    </label>
   </section>
 
   <section>
@@ -122,24 +134,6 @@ details .phone{border-top:1px solid var(--line)}
     <h2>Next 7 days, where you are</h2>
     <div class="panel" id="forecast"><div class="item empty">The forecast appears here once loaded.</div></div>
     <p class="note">Rain in mm per day · strongest gusts · highest waves at sea nearby.</p>
-  </section>
-
-  <section>
-    <h2>Location</h2>
-    <div class="panel"><form id="locForm">
-      <label for="locSel">Use my phone's GPS, or pick a place if GPS is off or the signal is weak.
-        <select id="locSel">
-          <option value="gps">GPS (automatic)</option>
-          <option value="7.7407,98.7696,Phi Phi – Tonsai,island">Phi Phi – Tonsai</option>
-          <option value="7.7660,98.7660,Phi Phi – north,island">Phi Phi – north (Laem Tong area)</option>
-          <option value="8.0330,98.8210,Ao Nang,coast">Krabi – Ao Nang</option>
-          <option value="8.0863,98.9063,Krabi town,coast">Krabi town</option>
-          <option value="7.8804,98.3923,Phuket,coast">Phuket</option>
-          <option value="13.7563,100.5018,Bangkok,city">Bangkok</option>
-          <option value="55.6180,12.6560,Copenhagen,home">Copenhagen</option>
-        </select>
-      </label>
-    </form></div>
   </section>
 
   <section>
