@@ -149,7 +149,8 @@ details .phone{border-top:1px solid var(--line)}
         <label for="f_outbound">Outbound flight<input id="f_outbound" name="outbound"></label>
         <label for="f_connection">Connection to Phuket / Krabi<input id="f_connection" name="connection"></label>
         <label for="f_ferry">Ferry to Phi Phi<input id="f_ferry" name="ferry"></label>
-        <label for="f_hotel">Hotel on Phi Phi (name + phone)<input id="f_hotel" name="hotel"></label>
+        <label for="f_hotel">Hotel on Phi Phi<input id="f_hotel" name="hotel"></label>
+        <label for="f_hotelTel">Hotel phone<input id="f_hotelTel" name="hotelTel" type="tel"></label>
         <label for="f_ret">Return flight<input id="f_ret" name="ret"></label>
         <label for="f_insurance">Travel insurance + 24 h alarm number<input id="f_insurance" name="insurance"></label>
         <label for="f_notes">Notes<textarea id="f_notes" name="notes"></textarea></label>
@@ -191,7 +192,7 @@ const PHONES = [
   ["Danish Embassy, Bangkok","+6623431100","After hours: duty officer in Copenhagen"],
   ["Danish Foreign Ministry, 24 h","+4533921112","Citizen service"]
 ];
-const TRIP_FIELDS=[["outbound","Outbound"],["connection","Connection"],["ferry","Ferry"],["hotel","Hotel"],["ret","Return"],["insurance","Insurance"],["notes","Notes"]];
+const TRIP_FIELDS=[["outbound","Outbound"],["connection","Connection"],["ferry","Ferry"],["hotel","Hotel"],["hotelTel","Hotel phone"],["ret","Return"],["insurance","Insurance"],["notes","Notes"]];
 
 /* ---- Helpers ---------------------------------------------------------- */
 const $=id=>document.getElementById(id);
@@ -220,11 +221,14 @@ $("phones").innerHTML=PHONES.map(([n,p,s])=>`<div class="phone"><span><b>${esc(n
 
 /* ---- Trip details (this phone only) ----------------------------------- */
 let trip=store.get("trip",{});
+try{if(location.hash.length>1){const h=new URLSearchParams(location.hash.slice(1));let ch=false;
+  for(const [k] of TRIP_FIELDS){const v=h.get(k);if(v){trip[k]=v;ch=true}}
+  if(ch){store.set("trip",trip)}history.replaceState(null,"",location.pathname+location.search)}}catch(e){}
 function renderTrip(){$("tripView").innerHTML=TRIP_FIELDS.map(([k,l])=>`<div class="kv"><dt>${l}</dt><dd>${trip[k]?esc(trip[k]):'<span class="empty">Not added</span>'}</dd></div>`).join("")}
 renderTrip();
 $("editBtn").onclick=()=>{TRIP_FIELDS.forEach(([k])=>$("f_"+k).value=trip[k]||"");$("tripForm").hidden=false;$("tripView").hidden=true;$("editBtn").hidden=true};
 $("cancelBtn").onclick=()=>{$("tripForm").hidden=true;$("tripView").hidden=false;$("editBtn").hidden=false};
-$("tripForm").addEventListener("submit",e=>{e.preventDefault();TRIP_FIELDS.forEach(([k])=>trip[k]=$("f_"+k).value.trim());store.set("trip",trip);renderTrip();$("cancelBtn").click()});
+$("tripForm").addEventListener("submit",e=>{e.preventDefault();TRIP_FIELDS.forEach(([k])=>trip[k]=$("f_"+k).value.trim());store.set("trip",trip);renderTrip();renderTransport(quickFromSel()||store.get("gpsQuick","pp"));$("cancelBtn").click()});
 
 /* ---- Quick places + transport ----------------------------------------- */
 const QUICK={bkk:"13.7563,100.5018,Bangkok,city",kbv:"8.0863,98.9063,Krabi town,coast",pp:"7.7407,98.7696,Phi Phi – Tonsai,island"};
@@ -253,7 +257,8 @@ function renderTransport(k){
   document.querySelectorAll("#seg button").forEach(b=>b.setAttribute("aria-pressed",b.dataset.p===k?"true":"false"));
   if(!t){$("trTitle").textContent="Transport";$("transport").innerHTML='<div class="item empty">Pick Bangkok, Krabi or Phi Phi above.</div>';return}
   $("trTitle").textContent="Transport – "+t.title;
-  $("transport").innerHTML=t.groups.map(([g,items],i)=>`<details${i===0?" open":""}><summary>${esc(g)}</summary>${items.map(x=>`<div class="phone"><span><b>${esc(x.n)}</b><small>${x.p?esc(fmtPhone(x.p))+" · ":""}${esc(x.s||"")}</small></span>${x.p?`<a class="btn" href="tel:${esc(x.p)}">Call</a>`:x.url?`<a class="btn" href="${esc(x.url)}" target="_blank" rel="noopener">Open</a>`:""}</div>`).join("")}</details>`).join("");
+  const ht=trip.hotelTel?`<div class="phone"><span><b>Your hotel${trip.hotel?": "+esc(trip.hotel):""}</b><small>${esc(fmtPhone(trip.hotelTel))} · Can book taxi, boat and ferry for you</small></span><a class="btn primary" href="tel:${esc(trip.hotelTel.replace(/[^+\d]/g,""))}">Call</a></div>`:"";
+  $("transport").innerHTML=ht+t.groups.map(([g,items],i)=>`<details${i===0?" open":""}><summary>${esc(g)}</summary>${items.map(x=>`<div class="phone"><span><b>${esc(x.n)}</b><small>${x.p?esc(fmtPhone(x.p))+" · ":""}${esc(x.s||"")}</small></span>${x.p?`<a class="btn" href="tel:${esc(x.p)}">Call</a>`:x.url?`<a class="btn" href="${esc(x.url)}" target="_blank" rel="noopener">Open</a>`:""}</div>`).join("")}</details>`).join("");
 }
 function quickFromSel(){const v=$("locSel").value;return Object.keys(QUICK).find(k=>QUICK[k]===v)||(v.includes("Phi Phi")?"pp":v.includes("Krabi")||v.includes("Ao Nang")?"kbv":v.includes("Bangkok")?"bkk":null)}
 $("seg").addEventListener("click",e=>{const b=e.target.closest("button[data-p]");if(!b)return;$("locSel").value=QUICK[b.dataset.p];store.set("locMode",QUICK[b.dataset.p]);renderTransport(b.dataset.p);refresh()});
