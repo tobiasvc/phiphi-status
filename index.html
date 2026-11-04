@@ -68,6 +68,12 @@ label{display:flex;flex-direction:column;gap:4px;font-size:.88rem;color:var(--mu
 input,textarea,select{font:inherit;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:9px 10px;width:100%}
 textarea{min-height:60px;resize:vertical}
 [hidden]{display:none!important}
+.seg{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.seg button[aria-pressed="true"]{background:var(--accent);color:var(--surface);border-color:var(--accent)}
+details{border-top:1px solid var(--line)}details:first-child{border-top:0}
+summary{padding:12px 14px;font-weight:700;cursor:pointer;list-style:none;display:flex;justify-content:space-between}
+summary::after{content:"+";color:var(--muted)}details[open] summary::after{content:"–"}
+details .phone{border-top:1px solid var(--line)}
 @media (prefers-reduced-motion:no-preference){.status{transition:background .3s,border-color .3s}}
 </style>
 </head>
@@ -89,6 +95,21 @@ textarea{min-height:60px;resize:vertical}
       <button type="button" id="shareBtn">Send my location</button>
     </div>
     <div class="note" id="msg"></div>
+  </section>
+
+  <section>
+    <h2>Where are you?</h2>
+    <div class="seg" id="seg">
+      <button type="button" data-p="bkk">Bangkok</button>
+      <button type="button" data-p="kbv">Krabi</button>
+      <button type="button" data-p="pp">Phi Phi</button>
+    </div>
+  </section>
+
+  <section>
+    <h2 id="trTitle">Transport</h2>
+    <div class="panel" id="transport"></div>
+    <p class="note">Numbers from public sources. Your hotel can always book transport for you – that is the safest option.</p>
   </section>
 
   <section id="claudeSec" hidden>
@@ -205,10 +226,43 @@ $("editBtn").onclick=()=>{TRIP_FIELDS.forEach(([k])=>$("f_"+k).value=trip[k]||""
 $("cancelBtn").onclick=()=>{$("tripForm").hidden=true;$("tripView").hidden=false;$("editBtn").hidden=false};
 $("tripForm").addEventListener("submit",e=>{e.preventDefault();TRIP_FIELDS.forEach(([k])=>trip[k]=$("f_"+k).value.trim());store.set("trip",trip);renderTrip();$("cancelBtn").click()});
 
+/* ---- Quick places + transport ----------------------------------------- */
+const QUICK={bkk:"13.7563,100.5018,Bangkok,city",kbv:"8.0863,98.9063,Krabi town,coast",pp:"7.7407,98.7696,Phi Phi – Tonsai,island"};
+const APP=(n,url,s)=>({n,url,s});
+const TEL=(n,p,s)=>({n,p,s});
+const TRANSPORT={
+ bkk:{title:"Bangkok",groups:[
+  ["Taxi & ride apps",[APP("Grab","https://www.grab.com/th/en/download/","Fixed price shown before you ride"),APP("Bolt","https://bolt.eu/en/cities/bangkok/","Usually cheapest")]],
+  ["Airport (Suvarnabhumi)",[{n:"Public taxi queue",s:"Level 1, gate 4–7. Meter + 50 THB airport fee + tolls"},{n:"Airport Rail Link",s:"Level B → city (Phaya Thai) in 26 min, ~45 THB"}]],
+  ["Help",[TEL("Tourist hotline (TAT)","1672","English, 24 h"),TEL("Tourist Police","1155","Taxi scams, lost items")]]
+ ]},
+ kbv:{title:"Krabi",groups:[
+  ["Taxi & ride apps",[APP("Grab","https://www.grab.com/th/en/download/","Works in Krabi town, Ao Nang and the airport"),APP("Bolt","https://bolt.eu/","Limited in Krabi")]],
+  ["Airport (KBV)",[{n:"Taxi counter in arrivals",s:"Fixed price. Krabi town ~350–600 THB, Ao Nang ~600–800 THB"}]],
+  ["Ferry to Phi Phi",[TEL("Klong Jilad Pier","+66828100087","Call / WhatsApp / Line"),TEL("Ticket2Attraction (agent)","+66955048282","Daily 07:30–00:30, WhatsApp"),{n:"Piers",s:"Klong Jilad or Chaofa / Kong Ka. ~1.5–2 h. Buy combined taxi+ferry ticket from your hotel"}]],
+  ["Help",[TEL("Tourist hotline (TAT)","1672","24 h"),TEL("Tourist Police","1155","24 h")]]
+ ]},
+ pp:{title:"Phi Phi",groups:[
+  ["Getting around",[{n:"No cars on the island",s:"Walk, or longtail boat from Tonsai pier. Agree the price before boarding"},{n:"Longtail taxi",s:"Tonsai ↔ Long Beach / Laem Tong. Ask at pier or hotel"}]],
+  ["Ferry back to Krabi / Phuket",[TEL("Klong Jilad Pier (Krabi)","+66828100087","Call / WhatsApp / Line"),TEL("Ticket2Attraction (agent)","+66955048282","WhatsApp"),{n:"Tonsai Pier ticket booths",s:"Buy the day before. Ask if boats run in bad weather"}]],
+  ["Help",[TEL("Phi Phi Hospital","+6675660719","Next to Tonsai Pier"),TEL("Tourist Police","1155","24 h")]]
+ ]}
+};
+function renderTransport(k){
+  const t=TRANSPORT[k];
+  document.querySelectorAll("#seg button").forEach(b=>b.setAttribute("aria-pressed",b.dataset.p===k?"true":"false"));
+  if(!t){$("trTitle").textContent="Transport";$("transport").innerHTML='<div class="item empty">Pick Bangkok, Krabi or Phi Phi above.</div>';return}
+  $("trTitle").textContent="Transport – "+t.title;
+  $("transport").innerHTML=t.groups.map(([g,items],i)=>`<details${i===0?" open":""}><summary>${esc(g)}</summary>${items.map(x=>`<div class="phone"><span><b>${esc(x.n)}</b><small>${x.p?esc(fmtPhone(x.p))+" · ":""}${esc(x.s||"")}</small></span>${x.p?`<a class="btn" href="tel:${esc(x.p)}">Call</a>`:x.url?`<a class="btn" href="${esc(x.url)}" target="_blank" rel="noopener">Open</a>`:""}</div>`).join("")}</details>`).join("");
+}
+function quickFromSel(){const v=$("locSel").value;return Object.keys(QUICK).find(k=>QUICK[k]===v)||(v.includes("Phi Phi")?"pp":v.includes("Krabi")||v.includes("Ao Nang")?"kbv":v.includes("Bangkok")?"bkk":null)}
+$("seg").addEventListener("click",e=>{const b=e.target.closest("button[data-p]");if(!b)return;$("locSel").value=QUICK[b.dataset.p];store.set("locMode",QUICK[b.dataset.p]);renderTransport(b.dataset.p);refresh()});
+
 /* ---- Location --------------------------------------------------------- */
 const PLACES=[...$("locSel").options].filter(o=>o.value!=="gps").map(o=>{const[a,b,n,k]=o.value.split(",");return{lat:+a,lon:+b,name:n,kind:k}});
 $("locSel").value=store.get("locMode","gps");
-$("locSel").addEventListener("change",()=>{store.set("locMode",$("locSel").value);refresh()});
+$("locSel").addEventListener("change",()=>{store.set("locMode",$("locSel").value);renderTransport(quickFromSel()||store.get("gpsQuick",null));refresh()});
+renderTransport(quickFromSel()||store.get("gpsQuick","pp"));
 function nearestPlace(lat,lon){let best=null,bd=1e9;for(const p of PLACES){const d=Math.hypot(p.lat-lat,(p.lon-lon)*Math.cos(lat*Math.PI/180))*111;if(d<bd){bd=d;best=p}}return{place:best,km:bd}}
 function getGPS(){return new Promise((res,rej)=>{if(!navigator.geolocation)return rej(new Error("no-gps"));
   navigator.geolocation.getCurrentPosition(p=>res({lat:p.coords.latitude,lon:p.coords.longitude,acc:p.coords.accuracy}),rej,{enableHighAccuracy:false,timeout:15000,maximumAge:10*60000})})}
@@ -217,6 +271,7 @@ async function resolveLocation(){
   if(mode!=="gps"){const[a,b,n,k]=mode.split(",");return{lat:+a,lon:+b,name:n,kind:k,src:"chosen"}}
   try{const g=await getGPS();const{place,km}=nearestPlace(g.lat,g.lon);
     const kind=km<15?place.kind:(Math.abs(g.lat-7.75)<1.5&&Math.abs(g.lon-98.6)<1.5?"coast":"other");
+    if(km<60){const q=place.name.includes("Phi Phi")?"pp":/Krabi|Ao Nang/.test(place.name)?"kbv":place.name==="Bangkok"?"bkk":null;if(q){store.set("gpsQuick",q);renderTransport(q)}}
     const loc={lat:+g.lat.toFixed(3),lon:+g.lon.toFixed(3),name:km<15?"near "+place.name:"your location",kind,src:"gps"};store.set("lastLoc",loc);return loc}
   catch(e){const last=store.get("lastLoc",null);if(last)return Object.assign({},last,{src:"last"});
     return Object.assign({},PLACES[0],{src:"default"})}
