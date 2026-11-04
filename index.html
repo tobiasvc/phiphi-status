@@ -68,7 +68,7 @@ label{display:flex;flex-direction:column;gap:4px;font-size:.88rem;color:var(--mu
 input,textarea,select{font:inherit;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:9px 10px;width:100%}
 textarea{min-height:60px;resize:vertical}
 [hidden]{display:none!important}
-.seg{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.seg{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}.seg button{padding:10px 4px;font-size:.85rem}
 .seg button[aria-pressed="true"]{background:var(--accent);color:var(--surface);border-color:var(--accent)}
 details{border-top:1px solid var(--line)}details:first-child{border-top:0}
 summary{padding:12px 14px;font-weight:700;cursor:pointer;list-style:none;display:flex;justify-content:space-between}
@@ -100,6 +100,7 @@ details .phone{border-top:1px solid var(--line)}
   <section>
     <h2>Where are you?</h2>
     <div class="seg" id="seg">
+      <button type="button" data-p="gps">📍 My location</button>
       <button type="button" data-p="bkk">Bangkok</button>
       <button type="button" data-p="kbv">Krabi</button>
       <button type="button" data-p="pp">Phi Phi</button>
@@ -254,14 +255,16 @@ const TRANSPORT={
 };
 function renderTransport(k){
   const t=TRANSPORT[k];
-  document.querySelectorAll("#seg button").forEach(b=>b.setAttribute("aria-pressed",b.dataset.p===k?"true":"false"));
+  const gpsOn=$("locSel").value==="gps";
+  document.querySelectorAll("#seg button").forEach(b=>b.setAttribute("aria-pressed",(gpsOn?b.dataset.p==="gps":b.dataset.p===k)?"true":"false"));
   if(!t){$("trTitle").textContent="Transport";$("transport").innerHTML='<div class="item empty">Pick Bangkok, Krabi or Phi Phi above.</div>';return}
   $("trTitle").textContent="Transport – "+t.title;
   const ht=trip.hotelTel?`<div class="phone"><span><b>Your hotel${trip.hotel?": "+esc(trip.hotel):""}</b><small>${esc(fmtPhone(trip.hotelTel))} · Can book taxi, boat and ferry for you</small></span><a class="btn primary" href="tel:${esc(trip.hotelTel.replace(/[^+\d]/g,""))}">Call</a></div>`:"";
   $("transport").innerHTML=ht+t.groups.map(([g,items],i)=>`<details${i===0?" open":""}><summary>${esc(g)}</summary>${items.map(x=>`<div class="phone"><span><b>${esc(x.n)}</b><small>${x.p?esc(fmtPhone(x.p))+" · ":""}${esc(x.s||"")}</small></span>${x.p?`<a class="btn" href="tel:${esc(x.p)}">Call</a>`:x.url?`<a class="btn" href="${esc(x.url)}" target="_blank" rel="noopener">Open</a>`:""}</div>`).join("")}</details>`).join("");
 }
 function quickFromSel(){const v=$("locSel").value;return Object.keys(QUICK).find(k=>QUICK[k]===v)||(v.includes("Phi Phi")?"pp":v.includes("Krabi")||v.includes("Ao Nang")?"kbv":v.includes("Bangkok")?"bkk":null)}
-$("seg").addEventListener("click",e=>{const b=e.target.closest("button[data-p]");if(!b)return;$("locSel").value=QUICK[b.dataset.p];store.set("locMode",QUICK[b.dataset.p]);renderTransport(b.dataset.p);refresh()});
+$("seg").addEventListener("click",e=>{const b=e.target.closest("button[data-p]");if(!b)return;
+  if(b.dataset.p==="gps"){$("locSel").value="gps";store.set("locMode","gps");renderTransport(store.get("gpsQuick","pp"));refresh();return}$("locSel").value=QUICK[b.dataset.p];store.set("locMode",QUICK[b.dataset.p]);renderTransport(b.dataset.p);refresh()});
 
 /* ---- Location --------------------------------------------------------- */
 const PLACES=[...$("locSel").options].filter(o=>o.value!=="gps").map(o=>{const[a,b,n,k]=o.value.split(",");return{lat:+a,lon:+b,name:n,kind:k}});
