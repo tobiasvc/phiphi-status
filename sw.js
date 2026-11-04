@@ -1,6 +1,6 @@
 // Phi Phi Trip Watch – offline cache for the app shell.
 // Weather data is stored by the page itself (localStorage), so it shows offline too.
-const CACHE = "ppw-v6";
+const CACHE = "ppw-v7";
 const SHELL = ["./", "index.html", "manifest.webmanifest", "icon.svg", "icon-180.png", "icon-512.png"];
 
 self.addEventListener("install", e => {

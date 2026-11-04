@@ -130,6 +130,11 @@ details .phone{border-top:1px solid var(--line)}
     <div class="panel" id="claudeBox"></div>
   </section>
 
+  <section id="newsSec" hidden>
+    <h2>Latest news (checked every 3 h)</h2>
+    <div class="panel" id="newsBox"></div>
+  </section>
+
   <section>
     <h2>Next 7 days, where you are</h2>
     <div class="panel" id="forecast"><div class="item empty">The forecast appears here once loaded.</div></div>
@@ -368,6 +373,9 @@ function renderFeed(f){
   const h=(Date.now()-new Date(f.updatedAt))/36e5;
   $("claudeBox").innerHTML=(f.headline?`<div class="item"><b>${esc(f.headline)}</b><p>Checked ${Math.round(h)} h ago${h>6?" · may be out of date":""}</p></div>`:"")+w+fr;
   $("claudeSec").hidden=false;
+  const n=f.news||[];
+  $("newsBox").innerHTML=n.length?n.map(x=>`<div class="item"><b>${esc(x.title)}</b><p>${x.date?esc(x.date)+" · ":""}${esc(x.detail||"")}${x.url&&/^https:\/\//.test(x.url)?` <a href="${esc(x.url)}" target="_blank" rel="noopener">Source</a>`:""}</p></div>`).join(""):`<div class="item empty">Nothing new that affects the trip.</div>`;
+  $("newsSec").hidden=false;
 }
 
 /* ---- Fetch ------------------------------------------------------------ */
