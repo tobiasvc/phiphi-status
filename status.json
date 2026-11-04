@@ -3,14 +3,51 @@
   "level": "amber",
   "headline": "Thundershowers and gusty wind around Krabi and Phi Phi this week; heaviest rain expected 7–9 Nov.",
   "warnings": [
-    {"title": "Flood watch, southern provinces incl. Krabi", "detail": "DDPM, 5–9 Nov: risk of flash floods and run-off; heaviest rain 7–9 Nov."},
-    {"title": "Thundershowers with gusty wind, Krabi / Phuket / Phang Nga", "detail": "Thai weather forecast 4 Nov: scattered storms mostly on the Andaman coast."}
+    {
+      "title": "Flood watch, southern provinces incl. Krabi",
+      "detail": "DDPM, 5–9 Nov: risk of flash floods and run-off; heaviest rain 7–9 Nov."
+    },
+    {
+      "title": "Thundershowers with gusty wind, Krabi / Phuket / Phang Nga",
+      "detail": "Thai weather forecast 4 Nov: scattered storms mostly on the Andaman coast."
+    }
   ],
-  "ferries": {"status": "No reported cancellations", "detail": "No current suspension found; boats can stop in high waves, so confirm with the operator or hotel the day before."},
+  "ferries": {
+    "status": "No reported cancellations",
+    "detail": "No current suspension found; boats can stop in high waves, so confirm with the operator or hotel the day before."
+  },
   "news": [
-    {"title": "Heavy rain in 19 provinces incl. Krabi", "date": "4 Nov", "detail": "Expect showers and storms; carry rain gear and plan boat trips flexibly.", "url": "https://thethaiger.com/hot-news/weather/thailand-weather-today-4-november-2026"},
-    {"title": "Flood alert issued for Phi Phi villages", "date": "28 Oct", "detail": "DDPM warned of flash floods on Phi Phi after heavy rain; low-lying areas near Tonsai flood first.", "url": "https://www.nationthailand.com/news/general/40072833"}
+    {
+      "title": "TMD: heavy to very heavy rain in the South 7–9 Nov",
+      "date": "4 Nov",
+      "detail": "Expect wet days around 7–9 Nov; plan indoor options and check boats before travelling.",
+      "url": "https://www.nationthailand.com/news/general/40073105"
+    },
+    {
+      "title": "Thunderstorms forecast for Krabi, Phuket and Phang Nga",
+      "date": "4 Nov",
+      "detail": "Waves above 2 m in storms; boat trips may be cut short or cancelled.",
+      "url": "https://thethaiger.com/hot-news/weather/thailand-weather-today-4-november-2026"
+    },
+    {
+      "title": "Suvarnabhumi runway repaired after rain damage",
+      "date": "4 Nov",
+      "detail": "Flights were not affected; no action needed.",
+      "url": "https://thethaiger.com/news/world/aviation/suvarnabhumi-airport-closes-runway-after-emirates-a380-stranded"
+    },
+    {
+      "title": "Flash flood hit Patong roads in Phuket",
+      "date": "3 Nov",
+      "detail": "Water receded within hours; in a downpour, avoid flooded streets and wait indoors.",
+      "url": "https://thethaiger.com/news/phuket/phuket-flooding-drowns-patong-roads"
+    },
+    {
+      "title": "Flood alert issued for Phi Phi villages",
+      "date": "28 Oct",
+      "detail": "Low-lying areas near Tonsai flood first in heavy rain.",
+      "url": "https://www.nationthailand.com/news/general/40072833"
+    }
   ],
-  "sourceUrl": "https://thethaiger.com/hot-news/weather/thailand-weather-today-4-november-2026",
-  "sourceTitle": "The Thaiger: Thailand weather 4 November 2026"
+  "sourceUrl": "https://www.nationthailand.com/news/general/40073105",
+  "sourceTitle": "Nation Thailand: heavy rain in the South 7–9 Nov"
 }
