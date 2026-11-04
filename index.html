@@ -1,0 +1,325 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#0b7a75">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Trip Watch">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="icon-180.png">
+<title>Phi Phi Trip Watch</title>
+<style>
+/* One narrow column: status first, then what changes today, then fixed reference info. System fonts only. */
+:root{
+  --bg:#eef3f2; --surface:#fff; --ink:#0f2a2e; --muted:#53686b; --line:#d3dfdd; --accent:#0b7a75;
+  --ok:#1e7d4f; --ok-bg:#dff2e7; --warn:#9a6200; --warn-bg:#fbefd4; --bad:#b3261e; --bad-bg:#fbe1de;
+  --font:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  color-scheme:light;
+}
+@media (prefers-color-scheme:dark){:root{
+  --bg:#0c1719; --surface:#132326; --ink:#e3eeec; --muted:#93a8a8; --line:#24393b; --accent:#4cc3bb;
+  --ok:#6fd49b; --ok-bg:#163527; --warn:#f0bd5c; --warn-bg:#3a2c10; --bad:#ff8d84; --bad-bg:#3f1b18; color-scheme:dark}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 var(--font);-webkit-text-size-adjust:100%}
+main{max-width:620px;margin:0 auto;display:flex;flex-direction:column;gap:20px;
+  padding-top:max(16px,env(safe-area-inset-top));padding-bottom:max(40px,env(safe-area-inset-bottom));
+  padding-left:max(16px,env(safe-area-inset-left));padding-right:max(16px,env(safe-area-inset-right))}
+h1{font-size:1.7rem;font-weight:800;letter-spacing:-.02em;line-height:1.1;margin:0}
+h2{font-size:.76rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);margin:0 0 8px}
+.meta{color:var(--muted);font-size:.88rem;display:flex;flex-wrap:wrap;gap:2px 12px;margin-top:4px;font-variant-numeric:tabular-nums}
+.status{border-radius:14px;padding:16px;display:flex;flex-direction:column;gap:8px;background:var(--surface);border:2px solid var(--line)}
+.status[data-level="green"]{background:var(--ok-bg);border-color:var(--ok)}
+.status[data-level="amber"]{background:var(--warn-bg);border-color:var(--warn)}
+.status[data-level="red"]{background:var(--bad-bg);border-color:var(--bad)}
+.pill{align-self:flex-start;font:700 .74rem/1 var(--font);letter-spacing:.08em;text-transform:uppercase;padding:6px 10px;border-radius:99px;background:var(--surface)}
+[data-level="green"] .pill{color:var(--ok)}[data-level="amber"] .pill{color:var(--warn)}[data-level="red"] .pill{color:var(--bad)}
+.headline{font-weight:700;font-size:1.2rem;line-height:1.3;margin:0}
+ul{margin:0;padding-left:20px;display:flex;flex-direction:column;gap:4px}
+.note{font-size:.85rem;color:var(--muted)}
+.stale{color:var(--bad);font-weight:700}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:12px;overflow:hidden}
+.row{display:grid;grid-template-columns:64px 1fr auto;gap:10px;padding:10px 14px;border-top:1px solid var(--line);align-items:center}
+.row:first-child,.item:first-child,.kv:first-child,.phone:first-child{border-top:0}
+.row>*{min-width:0}
+.day{font-weight:700;line-height:1.2}.day small{display:block;font-weight:400;color:var(--muted);font-size:.78rem}
+.fig{text-align:right;font-size:.82rem;color:var(--muted);white-space:nowrap;font-variant-numeric:tabular-nums}
+.fig b{color:var(--ink)}
+.dot{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:6px;background:var(--muted)}
+.dot.green{background:var(--ok)}.dot.amber{background:var(--warn)}.dot.red{background:var(--bad)}
+.item{padding:12px 14px;border-top:1px solid var(--line)}
+.item p{margin:2px 0 0;color:var(--muted);font-size:.92rem}
+.kv{display:grid;grid-template-columns:110px 1fr;gap:10px;padding:10px 14px;border-top:1px solid var(--line)}
+.kv dt{color:var(--muted);font-size:.9rem}.kv dd{margin:0;min-width:0;overflow-wrap:anywhere;white-space:pre-line}
+dl{margin:0}
+.empty{color:var(--muted);font-style:italic}
+.phone{display:flex;justify-content:space-between;gap:10px;align-items:center;padding:10px 14px;border-top:1px solid var(--line)}
+.phone span{min-width:0}.phone small{display:block;color:var(--muted);font-size:.82rem}
+a{color:var(--accent)}
+button,.btn{font:700 .9rem var(--font);color:var(--accent);background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:10px 14px;cursor:pointer;text-decoration:none;display:inline-block;text-align:center}
+.primary{background:var(--accent);color:var(--surface);border-color:var(--accent)}
+button:disabled{opacity:.55}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.bar{display:flex;flex-wrap:wrap;gap:8px}
+.sec-head{display:flex;justify-content:space-between;align-items:baseline;gap:10px}
+form{display:flex;flex-direction:column;gap:12px;padding:14px}
+label{display:flex;flex-direction:column;gap:4px;font-size:.88rem;color:var(--muted)}
+input,textarea,select{font:inherit;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:9px 10px;width:100%}
+textarea{min-height:60px;resize:vertical}
+[hidden]{display:none!important}
+@media (prefers-reduced-motion:no-preference){.status{transition:background .3s,border-color .3s}}
+</style>
+</head>
+<body>
+<main>
+  <header>
+    <h1>Phi Phi Trip Watch</h1>
+    <div class="meta"><span id="tripday">8–22 Nov 2026</span><span id="clock"></span></div>
+  </header>
+
+  <section class="status" id="status" data-level="none" aria-live="polite">
+    <span class="pill" id="level">Loading</span>
+    <p class="headline" id="headline">Getting your location and the forecast…</p>
+    <ul id="actions"></ul>
+    <div class="note" id="where"></div>
+    <div class="note" id="updated"></div>
+    <div class="bar">
+      <button type="button" class="primary" id="refreshBtn">Update now</button>
+      <button type="button" id="shareBtn">Send my location</button>
+    </div>
+    <div class="note" id="msg"></div>
+  </section>
+
+  <section id="claudeSec" hidden>
+    <h2>Official warnings &amp; ferries</h2>
+    <div class="panel" id="claudeBox"></div>
+  </section>
+
+  <section>
+    <h2>Next 7 days, where you are</h2>
+    <div class="panel" id="forecast"><div class="item empty">The forecast appears here once loaded.</div></div>
+    <p class="note">Rain in mm per day · strongest gusts · highest waves at sea nearby.</p>
+  </section>
+
+  <section>
+    <h2>Location</h2>
+    <div class="panel"><form id="locForm">
+      <label for="locSel">Use my phone's GPS, or pick a place if GPS is off or the signal is weak.
+        <select id="locSel">
+          <option value="gps">GPS (automatic)</option>
+          <option value="7.7407,98.7696,Phi Phi – Tonsai,island">Phi Phi – Tonsai</option>
+          <option value="7.7660,98.7660,Phi Phi – north,island">Phi Phi – north (Laem Tong area)</option>
+          <option value="8.0330,98.8210,Ao Nang,coast">Krabi – Ao Nang</option>
+          <option value="8.0863,98.9063,Krabi town,coast">Krabi town</option>
+          <option value="7.8804,98.3923,Phuket,coast">Phuket</option>
+          <option value="13.7563,100.5018,Bangkok,city">Bangkok</option>
+          <option value="55.6180,12.6560,Copenhagen,home">Copenhagen</option>
+        </select>
+      </label>
+    </form></div>
+  </section>
+
+  <section>
+    <div class="sec-head"><h2>Your trip</h2><button type="button" id="editBtn">Edit</button></div>
+    <div class="panel">
+      <dl id="tripView"></dl>
+      <form id="tripForm" hidden>
+        <label for="f_outbound">Outbound flight<input id="f_outbound" name="outbound"></label>
+        <label for="f_connection">Connection to Phuket / Krabi<input id="f_connection" name="connection"></label>
+        <label for="f_ferry">Ferry to Phi Phi<input id="f_ferry" name="ferry"></label>
+        <label for="f_hotel">Hotel on Phi Phi (name + phone)<input id="f_hotel" name="hotel"></label>
+        <label for="f_ret">Return flight<input id="f_ret" name="ret"></label>
+        <label for="f_insurance">Travel insurance + 24 h alarm number<input id="f_insurance" name="insurance"></label>
+        <label for="f_notes">Notes<textarea id="f_notes" name="notes"></textarea></label>
+        <div class="bar"><button type="submit" class="primary">Save</button><button type="button" id="cancelBtn">Cancel</button></div>
+      </form>
+    </div>
+    <p class="note">Saved on this phone only. Works offline.</p>
+  </section>
+
+  <section>
+    <h2>Emergency (tap to call)</h2>
+    <div class="panel" id="phones"></div>
+    <div class="bar" style="margin-top:10px"><a class="btn" id="hospBtn" href="https://www.google.com/maps/search/hospital" target="_blank" rel="noopener">Hospitals near me</a></div>
+  </section>
+
+  <section>
+    <h2>Check yourself</h2>
+    <div class="panel">
+      <div class="item"><a href="https://www.tmd.go.th/en" target="_blank" rel="noopener">Thai Meteorological Department</a><p>Official weather warnings</p></div>
+      <div class="item"><a href="https://um.dk/rejse-og-ophold/rejse-til-udlandet/rejsevejledninger/thailand" target="_blank" rel="noopener">Danish travel advice, Thailand</a><p>Ministry of Foreign Affairs</p></div>
+      <div class="item"><a href="https://open-meteo.com/" target="_blank" rel="noopener">Weather data: Open-Meteo</a><p>Forecast and wave model used in this app</p></div>
+    </div>
+  </section>
+</main>
+
+<script>
+"use strict";
+/* ---- Settings -------------------------------------------------------- */
+// Optional JSON feed with official warnings + ferry status, written by Claude every 3 h.
+// Leave empty until a feed exists; the app works without it.
+const FEED_URL = "status.json";
+const TRIP_START = new Date("2026-11-08T00:00:00+01:00");
+const TRIP_END = new Date("2026-11-22T23:59:00+07:00");
+const PHONES = [
+  ["Tourist Police (English)","1155","24 h, free"],
+  ["Ambulance / medical","1669","24 h"],
+  ["Police","191","24 h"],
+  ["Phi Phi Hospital, Tonsai","+6675660719","Next to Tonsai Pier"],
+  ["Danish Embassy, Bangkok","+6623431100","After hours: duty officer in Copenhagen"],
+  ["Danish Foreign Ministry, 24 h","+4533921112","Citizen service"]
+];
+const TRIP_FIELDS=[["outbound","Outbound"],["connection","Connection"],["ferry","Ferry"],["hotel","Hotel"],["ret","Return"],["insurance","Insurance"],["notes","Notes"]];
+
+/* ---- Helpers ---------------------------------------------------------- */
+const $=id=>document.getElementById(id);
+const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const store={get(k,d){try{const v=localStorage.getItem("ppw_"+k);return v?JSON.parse(v):d}catch(e){return d}},
+  set(k,v){try{localStorage.setItem("ppw_"+k,JSON.stringify(v))}catch(e){}}};
+const tfmt=(d,tz,o)=>new Intl.DateTimeFormat("en-GB",Object.assign({timeZone:tz},o)).format(d);
+const fmtPhone=p=>p.startsWith("+")?p.replace(/^\+(\d{2})(\d{1,2})(\d{3})(\d+)/,"+$1 $2 $3 $4"):p;
+async function getJSON(url,ms){const c=new AbortController();const t=setTimeout(()=>c.abort(),ms||12000);
+  try{const r=await fetch(url,{signal:c.signal,cache:"no-store"});if(!r.ok)throw new Error(r.status);return await r.json()}finally{clearTimeout(t)}}
+
+/* ---- Clock + trip day ------------------------------------------------- */
+function tick(){
+  const n=new Date();
+  $("clock").textContent="Thailand "+tfmt(n,"Asia/Bangkok",{weekday:"short",hour:"2-digit",minute:"2-digit"})+" · Denmark "+tfmt(n,"Europe/Copenhagen",{hour:"2-digit",minute:"2-digit"});
+  let t="8–22 Nov 2026";
+  if(n<TRIP_START)t+=" · departs in "+Math.ceil((TRIP_START-n)/864e5)+" days";
+  else if(n<=TRIP_END)t+=" · day "+(Math.floor((n-TRIP_START)/864e5)+1)+" of 15";
+  else t+=" · trip finished";
+  $("tripday").textContent=t;
+}
+tick();setInterval(tick,30000);
+
+/* ---- Emergency numbers ------------------------------------------------ */
+$("phones").innerHTML=PHONES.map(([n,p,s])=>`<div class="phone"><span><b>${esc(n)}</b><small>${esc(fmtPhone(p))} · ${esc(s)}</small></span><a class="btn" href="tel:${esc(p)}">Call</a></div>`).join("");
+
+/* ---- Trip details (this phone only) ----------------------------------- */
+let trip=store.get("trip",{});
+function renderTrip(){$("tripView").innerHTML=TRIP_FIELDS.map(([k,l])=>`<div class="kv"><dt>${l}</dt><dd>${trip[k]?esc(trip[k]):'<span class="empty">Not added</span>'}</dd></div>`).join("")}
+renderTrip();
+$("editBtn").onclick=()=>{TRIP_FIELDS.forEach(([k])=>$("f_"+k).value=trip[k]||"");$("tripForm").hidden=false;$("tripView").hidden=true;$("editBtn").hidden=true};
+$("cancelBtn").onclick=()=>{$("tripForm").hidden=true;$("tripView").hidden=false;$("editBtn").hidden=false};
+$("tripForm").addEventListener("submit",e=>{e.preventDefault();TRIP_FIELDS.forEach(([k])=>trip[k]=$("f_"+k).value.trim());store.set("trip",trip);renderTrip();$("cancelBtn").click()});
+
+/* ---- Location --------------------------------------------------------- */
+const PLACES=[...$("locSel").options].filter(o=>o.value!=="gps").map(o=>{const[a,b,n,k]=o.value.split(",");return{lat:+a,lon:+b,name:n,kind:k}});
+$("locSel").value=store.get("locMode","gps");
+$("locSel").addEventListener("change",()=>{store.set("locMode",$("locSel").value);refresh()});
+function nearestPlace(lat,lon){let best=null,bd=1e9;for(const p of PLACES){const d=Math.hypot(p.lat-lat,(p.lon-lon)*Math.cos(lat*Math.PI/180))*111;if(d<bd){bd=d;best=p}}return{place:best,km:bd}}
+function getGPS(){return new Promise((res,rej)=>{if(!navigator.geolocation)return rej(new Error("no-gps"));
+  navigator.geolocation.getCurrentPosition(p=>res({lat:p.coords.latitude,lon:p.coords.longitude,acc:p.coords.accuracy}),rej,{enableHighAccuracy:false,timeout:15000,maximumAge:10*60000})})}
+async function resolveLocation(){
+  const mode=$("locSel").value;
+  if(mode!=="gps"){const[a,b,n,k]=mode.split(",");return{lat:+a,lon:+b,name:n,kind:k,src:"chosen"}}
+  try{const g=await getGPS();const{place,km}=nearestPlace(g.lat,g.lon);
+    const kind=km<15?place.kind:(Math.abs(g.lat-7.75)<1.5&&Math.abs(g.lon-98.6)<1.5?"coast":"other");
+    const loc={lat:+g.lat.toFixed(3),lon:+g.lon.toFixed(3),name:km<15?"near "+place.name:"your location",kind,src:"gps"};store.set("lastLoc",loc);return loc}
+  catch(e){const last=store.get("lastLoc",null);if(last)return Object.assign({},last,{src:"last"});
+    return Object.assign({},PLACES[0],{src:"default"})}
+}
+
+/* ---- Risk + advice ---------------------------------------------------- */
+const WMO={0:"Clear",1:"Mostly clear",2:"Partly cloudy",3:"Overcast",45:"Fog",48:"Fog",51:"Light drizzle",53:"Drizzle",55:"Heavy drizzle",61:"Light rain",63:"Rain",65:"Heavy rain",80:"Showers",81:"Heavy showers",82:"Violent showers",95:"Thunderstorms",96:"Thunderstorms, hail",99:"Severe thunderstorms"};
+function dayLevel(rain,gust,wave){
+  if(rain>=50||gust>=60||wave>=2.5)return"red";
+  if(rain>=20||gust>=40||wave>=1.5)return"amber";
+  return"green";
+}
+function advice(level,kind,d0,d1){
+  const a=[];const sea=kind==="island"||kind==="coast";
+  if(level==="red"){
+    a.push("Expect heavy rain or rough sea today. Avoid boat trips and swimming.");
+    if(kind==="island")a.push("Tonsai and Loh Dalum flood first. Keep valuables and passport above floor level.");
+    if(sea)a.push("Ask your hotel or ferry office if boats are running before you go to the pier.");
+    a.push("Keep your phone charged and some cash on you.");
+  }else if(level==="amber"){
+    a.push("Showers or wind likely. Plan boat trips for the calmer days below.");
+    if(sea)a.push("Check with the ferry office before travelling by boat.");
+    a.push("Carry a rain jacket.");
+  }else{
+    a.push("No weather problems expected today.");
+    a.push("Use sun protection; UV is high even when cloudy.");
+  }
+  if(d1&&d1.level==="red"&&level!=="red")a.push("Tomorrow looks worse. Do any boat travel today if you can.");
+  return a.slice(0,4);
+}
+const LEVEL_TXT={green:"Normal",amber:"Take care",red:"Act now"};
+
+/* ---- Render ----------------------------------------------------------- */
+function render(data){
+  if(!data){$("level").textContent="No data";$("headline").textContent="No forecast saved yet. Connect to the internet and tap Update now.";return}
+  const{loc,days,fetchedAt}=data;const d0=days[0],d1=days[1];
+  const level=d0?d0.level:"none";
+  $("status").dataset.level=level;$("level").textContent=LEVEL_TXT[level]||"Update";
+  $("headline").textContent=d0?`${d0.text} today${d0.rain!=null?", "+d0.rain+" mm rain":""}${d0.wave!=null?", waves up to "+d0.wave+" m":""}.`:"";
+  $("actions").innerHTML=advice(level,loc.kind,d0,d1).map(x=>`<li>${esc(x)}</li>`).join("");
+  $("where").textContent="For "+loc.name+({gps:" (GPS)",chosen:" (chosen)",last:" (last known GPS)",default:" (GPS unavailable)"}[loc.src]||"");
+  $("hospBtn").href=`https://www.google.com/maps/search/hospital/@${loc.lat},${loc.lon},14z`;
+  $("forecast").innerHTML=days.map(d=>`<div class="row"><div class="day">${esc(d.dow)}<small>${esc(d.date)}</small></div><div><span class="dot ${d.level}"></span>${esc(d.text)}${d.temp!=null?" · "+d.temp+"°":""}</div><div class="fig"><b>${d.rain??"–"}</b> mm · ${d.gust??"–"} km/h<br>${d.wave!=null?"waves "+d.wave+" m":""}</div></div>`).join("");
+  showAge(fetchedAt);
+}
+function showAge(ts){
+  if(!ts)return;const h=(Date.now()-ts)/36e5;
+  const age=h<1?Math.max(1,Math.round(h*60))+" min ago":Math.round(h)+" h ago";
+  $("updated").innerHTML="Updated "+esc(age)+(h>6?' · <span class="stale">may be out of date</span>':"");
+}
+function renderFeed(f){
+  if(!f||!f.updatedAt){$("claudeSec").hidden=true;return}
+  const w=(f.warnings||[]).map(x=>`<div class="item"><b>${esc(x.title)}</b><p>${esc(x.detail)}</p></div>`).join("")||`<div class="item">No active official warnings for Krabi / Phi Phi.</div>`;
+  const fr=f.ferries?`<div class="item"><b>Ferries: ${esc(f.ferries.status)}</b><p>${esc(f.ferries.detail||"")}</p></div>`:"";
+  const h=(Date.now()-new Date(f.updatedAt))/36e5;
+  $("claudeBox").innerHTML=(f.headline?`<div class="item"><b>${esc(f.headline)}</b><p>Checked ${Math.round(h)} h ago${h>6?" · may be out of date":""}</p></div>`:"")+w+fr;
+  $("claudeSec").hidden=false;
+}
+
+/* ---- Fetch ------------------------------------------------------------ */
+let busy=false;
+async function refresh(){
+  if(busy)return;busy=true;$("refreshBtn").disabled=true;$("msg").textContent="Updating…";
+  try{
+    const loc=await resolveLocation();
+    const q=`latitude=${loc.lat}&longitude=${loc.lon}&timezone=auto&forecast_days=7`;
+    const wx=await getJSON(`https://api.open-meteo.com/v1/forecast?${q}&daily=weather_code,temperature_2m_max,precipitation_sum,wind_gusts_10m_max`);
+    let waves=null;
+    if(loc.kind==="island"||loc.kind==="coast"){try{waves=await getJSON(`https://marine-api.open-meteo.com/v1/marine?${q}&daily=wave_height_max`,8000)}catch(e){}}
+    const D=wx.daily,days=D.time.map((t,i)=>{
+      const dt=new Date(t+"T12:00:00");const rain=D.precipitation_sum[i]!=null?Math.round(D.precipitation_sum[i]):null;
+      const gust=D.wind_gusts_10m_max[i]!=null?Math.round(D.wind_gusts_10m_max[i]):null;
+      const wv=waves&&waves.daily&&waves.daily.wave_height_max[i]!=null?Math.round(waves.daily.wave_height_max[i]*10)/10:null;
+      return{dow:i===0?"Today":dt.toLocaleDateString("en-GB",{weekday:"short"}),date:dt.toLocaleDateString("en-GB",{day:"numeric",month:"short"}),
+        text:WMO[D.weather_code[i]]||"Mixed",temp:D.temperature_2m_max[i]!=null?Math.round(D.temperature_2m_max[i]):null,rain,gust,wave:wv,level:dayLevel(rain||0,gust||0,wv||0)}});
+    const data={loc,days,fetchedAt:Date.now()};store.set("data",data);render(data);
+    $("msg").textContent="";
+  }catch(e){
+    $("msg").textContent=navigator.onLine===false?"No internet. Showing the last saved forecast.":"Couldn't reach the weather service. Showing the last saved forecast.";
+  }
+  if(FEED_URL){try{const f=await getJSON(FEED_URL+"?t="+Date.now(),8000);store.set("feed",f);renderFeed(f)}catch(e){}}
+  busy=false;$("refreshBtn").disabled=false;
+}
+$("refreshBtn").onclick=refresh;
+
+/* ---- Share location --------------------------------------------------- */
+$("shareBtn").onclick=async()=>{
+  $("msg").textContent="Getting position…";
+  let lat,lon;
+  try{const g=await getGPS();lat=g.lat.toFixed(5);lon=g.lon.toFixed(5)}
+  catch(e){const l=store.get("lastLoc",null);if(!l){$("msg").textContent="GPS is off. Turn on Location for your browser and try again.";return}lat=l.lat;lon=l.lon}
+  const url=`https://maps.google.com/?q=${lat},${lon}`,text="I'm here: "+url;
+  try{if(navigator.share){await navigator.share({title:"My location",text,url});$("msg").textContent="";return}}catch(e){if(e.name==="AbortError"){$("msg").textContent="";return}}
+  try{await navigator.clipboard.writeText(text);$("msg").textContent="Link copied. Paste it into a message."}catch(e){$("msg").textContent=text}
+};
+
+/* ---- Start ------------------------------------------------------------ */
+render(store.get("data",null));renderFeed(store.get("feed",null));
+setInterval(()=>showAge((store.get("data",{})||{}).fetchedAt),60000);
+refresh();
+document.addEventListener("visibilitychange",()=>{if(document.visibilityState==="visible"){const d=store.get("data",null);if(!d||Date.now()-d.fetchedAt>60*60000)refresh()}});
+setInterval(()=>{if(document.visibilityState==="visible")refresh()},3*36e5);
+if("serviceWorker" in navigator)navigator.serviceWorker.register("sw.js").catch(()=>{});
+</script>
+</body>
+</html>
