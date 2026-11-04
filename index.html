@@ -138,7 +138,7 @@ details .phone{border-top:1px solid var(--line)}
   <section>
     <h2>Next 7 days, where you are</h2>
     <div class="panel" id="forecast"><div class="item empty">The forecast appears here once loaded.</div></div>
-    <p class="note">Rain in mm per day · strongest gusts · highest waves at sea nearby.</p>
+    <p class="note">Rain in mm per day · strongest gusts (m/s) · highest waves at sea nearby.</p>
   </section>
 
   <section>
@@ -358,7 +358,7 @@ function render(data){
   $("actions").innerHTML=advice(level,loc.kind,d0,d1).map(x=>`<li>${esc(x)}</li>`).join("");
   $("where").textContent="For "+loc.name+({gps:" (GPS)",chosen:" (chosen)",last:" (last known GPS)",default:" (GPS unavailable)"}[loc.src]||"");
   $("hospBtn").href=`https://www.google.com/maps/search/hospital/@${loc.lat},${loc.lon},14z`;
-  $("forecast").innerHTML=days.map(d=>`<div class="row"><div class="day">${esc(d.dow)}<small>${esc(d.date)}</small></div><div><span class="dot ${d.level}"></span>${esc(d.text)}${d.temp!=null?" · "+d.temp+"°":""}</div><div class="fig"><b>${d.rain??"–"}</b> mm · ${d.gust??"–"} km/h<br>${d.wave!=null?"waves "+d.wave+" m":""}</div></div>`).join("");
+  $("forecast").innerHTML=days.map(d=>`<div class="row"><div class="day">${esc(d.dow)}<small>${esc(d.date)}</small></div><div><span class="dot ${d.level}"></span>${esc(d.text)}${d.temp!=null?" · "+d.temp+"°":""}</div><div class="fig"><b>${d.rain??"–"}</b> mm · ${d.gust!=null?Math.round(d.gust/3.6):"–"} m/s<br>${d.wave!=null?"waves "+d.wave+" m":""}</div></div>`).join("");
   showAge(fetchedAt);
 }
 function showAge(ts){
