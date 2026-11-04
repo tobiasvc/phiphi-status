@@ -1,0 +1,11 @@
+{
+  "updatedAt": "2026-11-04T08:30:00Z",
+  "level": "amber",
+  "headline": "Heavy rain expected 6–8 Nov in southern Thailand. Easing from 10 Nov.",
+  "warnings": [
+    {"title": "Flood watch, all 14 southern provinces incl. Krabi", "detail": "DDPM, 5–9 Nov. Heaviest rain 7–9 Nov. Risk of flash floods, runoff and landslides."}
+  ],
+  "ferries": {"status": "No reported cancellations", "detail": "Ferries can stop when waves exceed 2–3 m. Highest risk 7–9 Nov. Confirm with the operator the day before."},
+  "sourceUrl": "https://www.nationthailand.com/news/general/40073072",
+  "sourceTitle": "Nation Thailand: southern provinces on flood alert 5–9 Nov"
+}
