@@ -81,7 +81,7 @@ details .phone{border-top:1px solid var(--line)}
 <main>
   <header>
     <h1>Phi Phi Trip Watch</h1>
-    <div class="meta"><span id="tripday">8–22 Nov 2026</span><span id="clock"></span></div>
+    <div class="meta"><span id="tripday">8–24 Nov 2026</span><span id="clock"></span></div>
   </header>
 
   <section class="status" id="status" data-level="none" aria-live="polite">
@@ -220,7 +220,7 @@ details .phone{border-top:1px solid var(--line)}
 // Leave empty until a feed exists; the app works without it.
 const FEED_URL = "status.json";
 const TRIP_START = new Date("2026-11-08T00:00:00+01:00");
-const TRIP_END = new Date("2026-11-22T23:59:00+07:00");
+const TRIP_END = new Date("2026-11-24T23:59:00+01:00");
 const PHONES = [
   ["Tourist Police (English)","1155","24 h, free"],
   ["Ambulance / medical","1669","24 h"],
@@ -245,9 +245,9 @@ async function getJSON(url,ms){const c=new AbortController();const t=setTimeout(
 function tick(){
   const n=new Date();
   $("clock").textContent="Thailand "+tfmt(n,"Asia/Bangkok",{weekday:"short",hour:"2-digit",minute:"2-digit"})+" · Denmark "+tfmt(n,"Europe/Copenhagen",{hour:"2-digit",minute:"2-digit"});
-  let t="8–22 Nov 2026";
+  let t="8–24 Nov 2026";
   if(n<TRIP_START)t+=" · departs in "+Math.ceil((TRIP_START-n)/864e5)+" days";
-  else if(n<=TRIP_END)t+=" · day "+(Math.floor((n-TRIP_START)/864e5)+1)+" of 15";
+  else if(n<=TRIP_END)t+=" · day "+(Math.floor((n-TRIP_START)/864e5)+1)+" of 17";
   else t+=" · trip finished";
   $("tripday").textContent=t;
 }
