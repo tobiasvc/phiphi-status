@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-05T12:50:00Z",
+  "updatedAt": "2026-11-05T15:50:00Z",
   "level": "amber",
   "headline": "Thundershowers and gusty wind around Krabi and Phi Phi this week; heaviest rain expected 7–9 Nov.",
   "warnings": [
@@ -17,6 +17,12 @@
     "detail": "No current suspension found; boats can stop in high waves, so confirm with the operator or hotel the day before."
   },
   "news": [
+    {
+      "title": "Very heavy rain forecast in parts of the South 7–9 Nov",
+      "date": "5 Nov",
+      "detail": "Krabi and Phuket named; expect wet days and possible boat delays around 7–9 Nov.",
+      "url": "https://www.nationthailand.com/news/general/40073150"
+    },
     {
       "title": "Heavy rain in 36 provinces; storms near Krabi today",
       "date": "5 Nov",
@@ -40,12 +46,6 @@
       "date": "4 Nov",
       "detail": "Flights were not affected; no action needed.",
       "url": "https://thethaiger.com/news/world/aviation/suvarnabhumi-airport-closes-runway-after-emirates-a380-stranded"
-    },
-    {
-      "title": "Flash flood hit Patong roads in Phuket",
-      "date": "3 Nov",
-      "detail": "Water receded within hours; in a downpour, avoid flooded streets and wait indoors.",
-      "url": "https://thethaiger.com/news/phuket/phuket-flooding-drowns-patong-roads"
     }
   ],
   "sourceUrl": "https://www.nationthailand.com/news/general/40073105",
