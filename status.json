@@ -1,7 +1,7 @@
 {
-  "updatedAt": "2026-11-08T18:50:00Z",
+  "updatedAt": "2026-11-08T21:50:00Z",
   "level": "amber",
-  "headline": "Thundershowers and gusty wind around Krabi and Phi Phi this week; heaviest rain expected 7–9 Nov.",
+  "headline": "Heavy rain in the South 8–13 Nov, Krabi included today; boats may be delayed in storms.",
   "warnings": [
     {
       "title": "Flood watch, southern provinces incl. Krabi",
@@ -17,6 +17,12 @@
     "detail": "No current suspension found; boats can stop in high waves, so confirm with the operator or hotel the day before."
   },
   "news": [
+    {
+      "title": "11 southern provinces alerted to heavy rain 8–13 Nov",
+      "date": "9 Nov",
+      "detail": "Krabi on today's heavy-rain list; confirm ferry with hotel or pier before leaving, waves can exceed 2 m in storms.",
+      "url": "https://nationthailand.com/news/general/40073261"
+    },
     {
       "title": "Heavy rain in the South continues through 13 Nov",
       "date": "8 Nov",
@@ -40,12 +46,6 @@
       "date": "7 Nov",
       "detail": "Heaviest rain today is on the Gulf side and in Trang/Satun; showers still possible around Krabi.",
       "url": "https://thethaiger.com/hot-news/weather/thailand-weather-today-7-november-2026"
-    },
-    {
-      "title": "Very heavy rain in parts of the South 7–9 Nov",
-      "date": "6 Nov",
-      "detail": "Flash flood warnings for the South; plan indoor days and check boats before travelling.",
-      "url": "https://nationthailand.com/news/general/40073193"
     }
   ],
   "sourceUrl": "https://www.nationthailand.com/news/general/40073105",
