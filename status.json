@@ -1,15 +1,15 @@
 {
-  "updatedAt": "2026-11-09T12:52:00Z",
+  "updatedAt": "2026-11-09T15:50:00Z",
   "level": "amber",
   "headline": "Heavy rain in the South 8–13 Nov, Krabi included today; boats may be delayed in storms.",
   "warnings": [
     {
-      "title": "Flood watch, southern provinces incl. Krabi",
-      "detail": "DDPM, 5–9 Nov: risk of flash floods and run-off; heaviest rain 7–9 Nov."
+      "title": "Flood watch, 16 provinces incl. Krabi, 9–13 Nov",
+      "detail": "DDPM: heavy rain in the South; beware flash floods near hills and low-lying areas."
     },
     {
-      "title": "Thundershowers with gusty wind, Krabi / Phuket / Phang Nga",
-      "detail": "Thai weather forecast 4 Nov: scattered storms mostly on the Andaman coast."
+      "title": "Flood watch, southern provinces incl. Krabi",
+      "detail": "DDPM, 5–9 Nov: risk of flash floods and run-off; heaviest rain 7–9 Nov."
     }
   ],
   "ferries": {
@@ -17,6 +17,12 @@
     "detail": "No current suspension found; boats can stop in high waves, so confirm with the operator or hotel the day before."
   },
   "news": [
+    {
+      "title": "DDPM: 16 provinces on flood alert 9–13 Nov",
+      "date": "9 Nov",
+      "detail": "Krabi included; heavy rain tomorrow, avoid low-lying streets in downpours.",
+      "url": "https://www.nationthailand.com/news/general/40073286"
+    },
     {
       "title": "11 southern provinces alerted to heavy rain 8–13 Nov",
       "date": "9 Nov",
@@ -40,12 +46,6 @@
       "date": "7 Nov",
       "detail": "Heavy rain forecast for Krabi and Phuket; check ferries the day before and allow buffer time.",
       "url": "https://www.nationthailand.com/news/general/40073207"
-    },
-    {
-      "title": "Heavy rain in 28 provinces today; Krabi not on the heavy list",
-      "date": "7 Nov",
-      "detail": "Heaviest rain today is on the Gulf side and in Trang/Satun; showers still possible around Krabi.",
-      "url": "https://thethaiger.com/hot-news/weather/thailand-weather-today-7-november-2026"
     }
   ],
   "sourceUrl": "https://www.nationthailand.com/news/general/40073105",
