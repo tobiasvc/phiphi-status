@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-10T00:50:00Z",
+  "updatedAt": "2026-11-10T03:50:00Z",
   "level": "amber",
   "headline": "Heavy rain in the South 8–13 Nov, Krabi included today; boats may be delayed in storms.",
   "warnings": [
@@ -17,6 +17,12 @@
     "detail": "No current suspension found; boats can stop in high waves, so confirm with the operator or hotel the day before."
   },
   "news": [
+    {
+      "title": "Heaviest rain today on the Gulf side, not Krabi",
+      "date": "10 Nov",
+      "detail": "Andaman coast gets scattered storms; Krabi not on today's heavy-rain list.",
+      "url": "https://thethaiger.com/hot-news/weather/thailand-weather-today-10-november-2026"
+    },
     {
       "title": "DDPM: 16 provinces on flood alert 9–13 Nov",
       "date": "9 Nov",
@@ -40,12 +46,6 @@
       "date": "8 Nov",
       "detail": "Worst rain in Nakhon Si Thammarat, Songkhla, Narathiwat; Krabi gets heavy showers and boats should avoid storms.",
       "url": "https://nationthailand.com/news/general/40073231"
-    },
-    {
-      "title": "Weather Dept: severe storms, worst in the South 8–9 Nov",
-      "date": "7 Nov",
-      "detail": "Heavy rain forecast for Krabi and Phuket; check ferries the day before and allow buffer time.",
-      "url": "https://www.nationthailand.com/news/general/40073207"
     }
   ],
   "sourceUrl": "https://www.nationthailand.com/news/general/40073105",
