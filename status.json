@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-11T21:50:00Z",
+  "updatedAt": "2026-11-12T00:50:00Z",
   "level": "amber",
   "headline": "Heavy rain in the South 8–13 Nov, Krabi included today; boats may be delayed in storms.",
   "warnings": [
@@ -17,6 +17,12 @@
     "detail": "No current suspension found; boats can stop in high waves, so confirm with the operator or hotel the day before."
   },
   "news": [
+    {
+      "title": "Heavy rain in 14 provinces today, Krabi included",
+      "date": "12 Nov",
+      "detail": "Rain most of the day around Krabi and Phi Phi; skip boat trips today.",
+      "url": "https://thethaiger.com/hot-news/weather/thailand-weather-today-12-november-2026"
+    },
     {
       "title": "TMD: heavy rain back in Krabi tomorrow, 12 Nov",
       "date": "11 Nov",
@@ -40,12 +46,6 @@
       "date": "9 Nov",
       "detail": "Krabi included; heavy rain tomorrow, avoid low-lying streets in downpours.",
       "url": "https://www.nationthailand.com/news/general/40073286"
-    },
-    {
-      "title": "11 southern provinces alerted to heavy rain 8–13 Nov",
-      "date": "9 Nov",
-      "detail": "Krabi on today's heavy-rain list; confirm ferry with hotel or pier before leaving, waves can exceed 2 m in storms.",
-      "url": "https://nationthailand.com/news/general/40073261"
     }
   ],
   "sourceUrl": "https://www.nationthailand.com/news/general/40073105",
