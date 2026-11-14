@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-13T21:50:00Z",
+  "updatedAt": "2026-11-14T00:50:00Z",
   "level": "amber",
   "headline": "Heavy rain in the South 8–13 Nov, Krabi included today; boats may be delayed in storms.",
   "warnings": [
@@ -17,6 +17,12 @@
     "detail": "No current suspension found; boats can stop in high waves, so confirm with the operator or hotel the day before."
   },
   "news": [
+    {
+      "title": "Krabi off today's heavy-rain list; new wet spell 18–22 Nov",
+      "date": "14 Nov",
+      "detail": "Good window 14–17 Nov for boat trips; TMD expects heavy rain in the South again from 18 Nov.",
+      "url": "https://thethaiger.com/hot-news/weather/thailand-weather-today-14-november-2026"
+    },
     {
       "title": "Monsoon weakening 14–18 Nov",
       "date": "13 Nov",
@@ -40,12 +46,6 @@
       "date": "10 Nov",
       "detail": "Wet and stormy until 13 Nov; plan boat trips and snorkelling for after the 14th.",
       "url": "https://www.tmd.go.th/en/warning-and-events/warning-storm"
-    },
-    {
-      "title": "Heaviest rain today on the Gulf side, not Krabi",
-      "date": "10 Nov",
-      "detail": "Andaman coast gets scattered storms; Krabi not on today's heavy-rain list.",
-      "url": "https://thethaiger.com/hot-news/weather/thailand-weather-today-10-november-2026"
     }
   ],
   "sourceUrl": "https://www.nationthailand.com/news/general/40073105",
