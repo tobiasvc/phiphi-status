@@ -1,15 +1,11 @@
 {
-  "updatedAt": "2026-11-14T06:50:00Z",
+  "updatedAt": "2026-11-14T09:50:00Z",
   "level": "amber",
-  "headline": "Heavy rain in the South 8–13 Nov, Krabi included today; boats may be delayed in storms.",
+  "headline": "Calmer days 14–17 Nov; TMD expects heavy rain in the South again 18–22 Nov.",
   "warnings": [
     {
-      "title": "Flood watch, 16 provinces incl. Krabi, 9–13 Nov",
-      "detail": "DDPM: heavy rain in the South; beware flash floods near hills and low-lying areas."
-    },
-    {
-      "title": "Flood watch, southern provinces incl. Krabi",
-      "detail": "DDPM, 5–9 Nov: risk of flash floods and run-off; heaviest rain 7–9 Nov."
+      "title": "TMD: heavy rain in the South 18–22 Nov",
+      "detail": "Flash floods and landslides possible, especially 18–19 Nov; waves above 2 m in storms."
     }
   ],
   "ferries": {
@@ -17,6 +13,12 @@
     "detail": "No current suspension found; boats can stop in high waves, so confirm with the operator or hotel the day before."
   },
   "news": [
+    {
+      "title": "TMD: five days of heavy southern rain 18–22 Nov",
+      "date": "14 Nov",
+      "detail": "Do boat trips before the 18th; check ferries the day before any crossing.",
+      "url": "https://www.nationthailand.com/news/general/40073485"
+    },
     {
       "title": "Krabi off today's heavy-rain list; new wet spell 18–22 Nov",
       "date": "14 Nov",
@@ -40,12 +42,6 @@
       "date": "11 Nov",
       "detail": "Avoid boat trips on the 12th; waves above 2 m in storms. Easing expected from 14 Nov.",
       "url": "https://www.nationthailand.com/news/general/40073340"
-    },
-    {
-      "title": "TMD: rain easing in the South from 14–15 Nov",
-      "date": "10 Nov",
-      "detail": "Wet and stormy until 13 Nov; plan boat trips and snorkelling for after the 14th.",
-      "url": "https://www.tmd.go.th/en/warning-and-events/warning-storm"
     }
   ],
   "sourceUrl": "https://www.nationthailand.com/news/general/40073105",
