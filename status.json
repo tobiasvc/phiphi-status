@@ -1,11 +1,11 @@
 {
-  "updatedAt": "2026-11-16T12:55:00Z",
+  "updatedAt": "2026-11-16T15:50:00Z",
   "level": "amber",
   "headline": "Calmer days 14–17 Nov; TMD expects heavy rain in the South again 18–22 Nov.",
   "warnings": [
     {
-      "title": "TMD: heavy rain in the South 18–22 Nov",
-      "detail": "Flash floods and landslides possible, especially 18–19 Nov; waves above 2 m in storms."
+      "title": "Flood & landslide alert, 15 provinces incl. Krabi, 18–22 Nov",
+      "detail": "DDPM/TMD: stronger monsoon, heavy rain; avoid hillsides and streams in downpours, waves above 2 m in storms."
     }
   ],
   "ferries": {
@@ -13,6 +13,12 @@
     "detail": "No current suspension found; boats can stop in high waves, so confirm with the operator or hotel the day before."
   },
   "news": [
+    {
+      "title": "Krabi and Phuket on flood/landslide alert 18–22 Nov",
+      "date": "16 Nov",
+      "detail": "Keep the last days calm; confirm the 23 Nov ferry with the hotel the day before.",
+      "url": "https://www.nationthailand.com/news/general/40073570"
+    },
     {
       "title": "Krabi back on heavy-rain list today; wetter 18–20 Nov",
       "date": "15 Nov",
@@ -36,12 +42,6 @@
       "date": "13 Nov",
       "detail": "Fewer storms on the Andaman coast from tomorrow; good window for boat trips if seas are calm.",
       "url": "https://www.nationthailand.com/news/general/40073476"
-    },
-    {
-      "title": "Heavy rain in 14 provinces today, Krabi included",
-      "date": "12 Nov",
-      "detail": "Rain most of the day around Krabi and Phi Phi; skip boat trips today.",
-      "url": "https://thethaiger.com/hot-news/weather/thailand-weather-today-12-november-2026"
     }
   ],
   "sourceUrl": "https://www.nationthailand.com/news/general/40073105",
