@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-17T09:50:00Z",
+  "updatedAt": "2026-11-17T21:50:00Z",
   "level": "amber",
   "headline": "Calmer days 14–17 Nov; TMD expects heavy rain in the South again 18–22 Nov.",
   "warnings": [
@@ -13,6 +13,12 @@
     "detail": "No current suspension found; boats can stop in high waves, so confirm with the operator or hotel the day before."
   },
   "news": [
+    {
+      "title": "TMD advisory No. 6: heavy rain in the South 18–22 Nov",
+      "date": "18 Nov",
+      "detail": "Krabi on the heavy-rain list from today; stay off boats in storms and confirm the 23 Nov ferry the day before.",
+      "url": "https://www.nationthailand.com/news/general/40073607"
+    },
     {
       "title": "Krabi and Phuket on flood/landslide alert 18–22 Nov",
       "date": "16 Nov",
@@ -36,12 +42,6 @@
       "date": "14 Nov",
       "detail": "Good window 14–17 Nov for boat trips; TMD expects heavy rain in the South again from 18 Nov.",
       "url": "https://thethaiger.com/hot-news/weather/thailand-weather-today-14-november-2026"
-    },
-    {
-      "title": "Monsoon weakening 14–18 Nov",
-      "date": "13 Nov",
-      "detail": "Fewer storms on the Andaman coast from tomorrow; good window for boat trips if seas are calm.",
-      "url": "https://www.nationthailand.com/news/general/40073476"
     }
   ],
   "sourceUrl": "https://www.nationthailand.com/news/general/40073105",
